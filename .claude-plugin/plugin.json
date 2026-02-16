@@ -1,0 +1,10 @@
+{
+  "name": "astro-site-builder",
+  "version": "1.0.0",
+  "description": "Build 100+ page local service business websites with Astro 5, Tailwind CSS v4, and Cloudflare Pages. Generates programmatic SEO sites from business data with working contact forms.",
+  "author": {
+    "name": "Nicolas Gorrono"
+  },
+  "license": "MIT",
+  "keywords": ["astro", "seo", "local-business", "programmatic-seo", "tailwind", "cloudflare"]
+}
