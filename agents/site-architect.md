@@ -99,12 +99,22 @@ Follow these steps in order. Do not skip steps.
    - `export const prerender = false` at the top
    - Graceful fallback when RESEND_API_KEY is not set
 
-10. **Add supporting files**:
+10. **Add JSON-LD schema markup** to every page:
+    - Read the skill's `references/schema-patterns.md` for templates
+    - Create `src/components/Schema.astro` (reusable component wrapping `set:html={JSON.stringify(data)}`)
+    - Homepage: LocalBusiness + WebSite schemas
+    - Service pages: Service schema + BreadcrumbList
+    - Area pages: LocalBusiness (with areaServed) + BreadcrumbList
+    - Combo pages: Service (with areaServed) + FAQPage + BreadcrumbList
+    - About/Contact: LocalBusiness + BreadcrumbList
+    - Use the correct industry-specific `@type` (e.g., Plumber, Electrician, HVACBusiness)
+
+11. **Add supporting files**:
     - `public/robots.txt` with sitemap reference
     - `.dev.vars` with RESEND_API_KEY placeholder
     - Ensure `.gitignore` includes dist/, node_modules/, .env, .dev.vars, .astro/, .wrangler/
 
-11. **Build and verify**:
+12. **Build and verify**:
     ```
     npm run build
     ```
@@ -160,3 +170,4 @@ After completing the build, report:
   4. Two different combination pages
 - Next steps: git commit, push to GitHub, deploy to Cloudflare Pages
 - Remind about setting NODE_VERSION=22 and RESEND_API_KEY in Cloudflare environment variables
+- Suggest running `/generate-images` to add AI-generated hero, service, and area images

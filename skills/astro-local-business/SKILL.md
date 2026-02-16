@@ -37,6 +37,7 @@ src/styles/global.css          Tailwind v4 design system via @theme
 src/layouts/BaseLayout.astro   HTML shell with head, Google Fonts, nav, footer
 src/components/Header.astro    Sticky nav with phone CTA, mobile menu
 src/components/Footer.astro    Dark footer with service/area links
+src/components/Schema.astro    Reusable JSON-LD structured data wrapper
 src/pages/index.astro          Homepage with hero, stats, grids
 src/pages/services/index.astro         All services listing
 src/pages/services/[service].astro     Individual service page
@@ -82,6 +83,19 @@ For complete code templates with full file contents, read `references/code-patte
 - **BaseLayout** with meta tags, Open Graph, Google Fonts
 - **Data file interfaces** with helper functions (getBySlug, getNearby)
 - **FAQ generation** varying by area, service, emergency flag, price range
+- **Schema.astro** reusable component for JSON-LD structured data
+
+## JSON-LD Schema Markup
+
+For structured data templates, read `references/schema-patterns.md`. Every page should include appropriate schema:
+
+- **LocalBusiness** on homepage, about, contact (with industry-specific `@type`)
+- **Service** on service pages and combo pages (with `areaServed`)
+- **FAQPage** on combo pages and area pages
+- **BreadcrumbList** on all pages with breadcrumb navigation
+- **WebSite** on homepage only
+
+Use Astro's `set:html={JSON.stringify(data)}` pattern for JSON-LD to avoid double-escaping.
 
 ## Industry Color Palettes
 
@@ -92,6 +106,15 @@ Pre-built palettes in `assets/color-palettes.json` for: plumber (blue), electric
 For browsing free UI components to enhance the design, consult `references/design-resources.md`. Top recommendations:
 - **HyperUI** (hyperui.dev): Plain HTML + Tailwind v4 components, paste directly into .astro files
 - **Preline UI** (preline.co): 640+ free components, Tailwind v4 compatible
+
+## AI Image Generation
+
+The `/generate-images` command uses the nano-banana-pro skill (Gemini 3 Pro Image API) to create:
+- **Hero image** (`public/images/hero.webp`): Professional scene matching the industry and city
+- **Service images** (`public/images/services/{slug}.webp`): One per service type
+- **Area images** (`public/images/areas/{slug}.webp`): Cityscape or landmark per area
+
+All images are generated at 2K resolution and converted to WebP. Requires the nano-banana-pro skill at `~/.claude/skills/nano-banana-pro/`.
 
 ## Contact Form Pattern
 

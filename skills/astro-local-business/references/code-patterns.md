@@ -506,3 +506,39 @@ import { contactUrl } from '../lib/urls';
 ```
 
 Replace "Ready to Fix Your Plumbing?" with the appropriate industry CTA.
+
+## Schema.astro (Reusable JSON-LD Component)
+
+```astro
+---
+// src/components/Schema.astro
+interface Props {
+  data: Record<string, unknown>;
+}
+
+const { data } = Astro.props;
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(data)} />
+```
+
+Usage in any page:
+
+```astro
+---
+import Schema from '../components/Schema.astro';
+import { business } from '../data/business';
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "Plumber",
+  "name": business.name,
+  "url": business.website,
+  "telephone": business.phone,
+};
+---
+
+<Schema data={schemaData} />
+```
+
+For complete schema templates (LocalBusiness, Service, FAQPage, BreadcrumbList, WebSite), see `references/schema-patterns.md`.
