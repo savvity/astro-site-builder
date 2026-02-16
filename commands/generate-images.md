@@ -5,18 +5,17 @@ description: Generate AI images for a local business website using Nano Banana P
 
 # Generate Site Images
 
-Generate AI images for the local business website using the nano-banana-pro skill (Gemini 3 Pro Image API).
+Generate AI images for the local business website using the bundled Gemini 3 Pro Image script.
 
 ## Prerequisites
 
-1. The nano-banana-pro skill must be installed at `~/.claude/skills/nano-banana-pro/`. Check by looking for `~/.claude/skills/nano-banana-pro/SKILL.md`. If not available, inform the user they need to install it first, or they can add images manually to `public/images/`.
+A **Gemini API key** is required (free). Check for it in this order:
+1. Environment variable `GEMINI_API_KEY`
+2. If not found, ask the user to provide one using AskUserQuestion. Include a note that it's free at https://aistudio.google.com/apikey
 
-2. A Gemini API key is required. Check for it in this order:
-   - Environment variable `GEMINI_API_KEY`
-   - If not found, ask the user to provide one using AskUserQuestion
-   - The key is free at https://aistudio.google.com/apikey
+Store the resolved key in a variable for all image generation commands.
 
-   Store the resolved key in a variable for all image generation commands.
+**Runtime dependency**: The script uses `uv run` which auto-installs Python dependencies (`google-genai`, `pillow`). The user needs `uv` installed. If `uv` is not available, suggest: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 
 ## Process
 
@@ -37,15 +36,15 @@ Generate AI images for the local business website using the nano-banana-pro skil
    mkdir -p public/images/services public/images/areas
    ```
 
-4. **Generate images** using the nano-banana-pro skill. For each image, run:
+4. **Generate images** using the bundled script at `scripts/generate_image.py` (relative to this plugin's root directory). For each image, run:
    ```bash
-   uv run ~/.claude/skills/nano-banana-pro/scripts/generate_image.py \
+   uv run ${CLAUDE_PLUGIN_ROOT}/scripts/generate_image.py \
      --prompt "PROMPT" \
      --filename "public/images/FILENAME.png" \
      --resolution 2K \
-     --api-key "$GEMINI_API_KEY"
+     --api-key "THE_RESOLVED_KEY"
    ```
-   Where `$GEMINI_API_KEY` is the key resolved in the prerequisites step.
+   Replace `THE_RESOLVED_KEY` with the actual Gemini API key resolved in the prerequisites step. Do NOT use `$GEMINI_API_KEY` as a shell variable in the command (it may not be set as an env var). Instead, pass the literal key string.
 
    Then convert to WebP for optimal web performance:
    ```bash
@@ -53,7 +52,7 @@ Generate AI images for the local business website using the nano-banana-pro skil
    rm public/images/FILENAME.png
    ```
 
-   If `cwebp` is not available, keep the PNG files and inform the user.
+   If `cwebp` is not available, try `npx @aspect-build/cwebp -q 85 ...` as a fallback. If neither works, keep the PNG files and inform the user.
 
 ### Image Prompts by Type
 

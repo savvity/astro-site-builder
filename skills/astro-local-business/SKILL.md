@@ -109,12 +109,12 @@ For browsing free UI components to enhance the design, consult `references/desig
 
 ## AI Image Generation
 
-The `/generate-images` command uses the nano-banana-pro skill (Gemini 3 Pro Image API) to create:
+The `/generate-images` command uses the bundled Gemini 3 Pro Image script to create:
 - **Hero image** (`public/images/hero.webp`): Professional scene matching the industry and city
 - **Service images** (`public/images/services/{slug}.webp`): One per service type
 - **Area images** (`public/images/areas/{slug}.webp`): Cityscape or landmark per area
 
-All images are generated at 2K resolution and converted to WebP. Requires the nano-banana-pro skill at `~/.claude/skills/nano-banana-pro/`.
+All images are generated at 2K resolution and converted to WebP. The user only needs a free Gemini API key (https://aistudio.google.com/apikey) and `uv` installed for Python dependency management.
 
 ## Contact Form Pattern
 
