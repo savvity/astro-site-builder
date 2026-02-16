@@ -9,9 +9,14 @@ Generate AI images for the local business website using the nano-banana-pro skil
 
 ## Prerequisites
 
-This command requires the nano-banana-pro skill to be installed at `~/.claude/skills/nano-banana-pro/`. If it is not available, inform the user they need to install it first, or they can add images manually to `public/images/`.
+1. The nano-banana-pro skill must be installed at `~/.claude/skills/nano-banana-pro/`. Check by looking for `~/.claude/skills/nano-banana-pro/SKILL.md`. If not available, inform the user they need to install it first, or they can add images manually to `public/images/`.
 
-Check if the skill exists by looking for `~/.claude/skills/nano-banana-pro/SKILL.md`.
+2. A Gemini API key is required. Check for it in this order:
+   - Environment variable `GEMINI_API_KEY`
+   - If not found, ask the user to provide one using AskUserQuestion
+   - The key is free at https://aistudio.google.com/apikey
+
+   Store the resolved key in a variable for all image generation commands.
 
 ## Process
 
@@ -38,8 +43,9 @@ Check if the skill exists by looking for `~/.claude/skills/nano-banana-pro/SKILL
      --prompt "PROMPT" \
      --filename "public/images/FILENAME.png" \
      --resolution 2K \
-     --api-key "AIzaSyCHUeVRUgm5kyL2EO6n_L24d7cIzZRVCaA"
+     --api-key "$GEMINI_API_KEY"
    ```
+   Where `$GEMINI_API_KEY` is the key resolved in the prerequisites step.
 
    Then convert to WebP for optimal web performance:
    ```bash
@@ -107,4 +113,5 @@ Example for Austin areas:
 - If the user wants higher quality, use `--resolution 4K`
 - Always include "no text" in the prompt to avoid AI-generated text artifacts in images
 - Always include "photorealistic" for business sites (unless user requests illustration style)
-- The Gemini API key is included in the nano-banana-pro skill configuration
+- The Gemini API key is free at https://aistudio.google.com/apikey
+- Users can set `export GEMINI_API_KEY=your_key` in their shell profile to avoid being prompted each time
